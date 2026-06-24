@@ -1,4 +1,4 @@
-# Tarum — Creator UI
+# Tarum — Creator UI - tarum-nw5j.vercel.app
 
 An AI-powered image and video generation platform built with Next.js. This project was developed as part of the Frontend Developer Technical Assessment for Tarum.
 
