@@ -90,12 +90,18 @@ export default function HistoryPanel({ currentChatId, onSelectChat, onNewChat })
           ) : displayChats.length > 0 ? (
             <div className="flex-1 flex items-center gap-[9px] overflow-x-auto scrollbar-none py-2 h-full">
               {displayChats.map((chat) => (
-                <button
+                <div
                   key={chat.id}
-                  type="button"
+                  role="button"
+                  tabIndex={0}
                   onClick={() => onSelectChat(chat)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      onSelectChat(chat);
+                    }
+                  }}
                   aria-label={`Chat: ${chat.title}`}
-                  aria-pressed={currentChatId === chat.id}
                   className={`group relative flex-shrink-0 w-[95px] h-[77px] rounded-[5px] overflow-hidden text-left transition-all border-2 cursor-pointer ${
                     currentChatId === chat.id
                       ? "border-[#c9785f] shadow-[0_0_8px_rgba(201,120,95,0.4)]"
@@ -122,16 +128,23 @@ export default function HistoryPanel({ currentChatId, onSelectChat, onNewChat })
                     {chat.title}
                   </div>
 
-                  {/* Delete button on hover */}
-                  <button
-                    type="button"
+                  {/* Delete button on hover — div with role="button" avoids nested <button> */}
+                  <div
+                    role="button"
+                    tabIndex={0}
                     onClick={(e) => handleDeleteChat(e, chat.id)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        handleDeleteChat(e, chat.id);
+                      }
+                    }}
                     aria-label={`Delete ${chat.title}`}
                     className="absolute top-[3px] right-[3px] w-[15px] h-[15px] rounded-full bg-black/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-900/90 text-white cursor-pointer"
                   >
                     <i className="fas fa-times text-[6px]" />
-                  </button>
-                </button>
+                  </div>
+                </div>
               ))}
             </div>
           ) : (
