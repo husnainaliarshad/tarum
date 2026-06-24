@@ -1,34 +1,33 @@
 import { createClient } from "@libsql/client";
-import path from "path";
-import fs from "fs";
-
-const dbPath = path.join(process.cwd(), "data", "chats.db");
 
 let db;
 
 /**
  * Get or initialize the Turso (libsql) database client.
- * All execute() calls are async — they return Promises.
+ * - On Vercel (production): uses TURSO_DATABASE_URL + TURSO_AUTH_TOKEN
+ * - Locally: falls back to a local SQLite file
  */
 export function getDb() {
   if (!db) {
     const url = process.env.TURSO_DATABASE_URL;
     const authToken = process.env.TURSO_AUTH_TOKEN;
 
-    if (url) {
-      db = createClient({
-        url,
-        authToken: authToken || "",
-      });
+    if (url && authToken) {
+      // Production: use Turso cloud database
+      db = createClient({ url, authToken });
     } else {
+      // Local dev: use a local SQLite file via libsql
+      // We dynamically require path/fs so this code path never runs on Vercel
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const path = require("path");
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const fs = require("fs");
+      const dbPath = path.join(process.cwd(), "data", "chats.db");
       const dir = path.dirname(dbPath);
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
       }
-
-      db = createClient({
-        url: `file:${dbPath}`,
-      });
+      db = createClient({ url: `file:${dbPath}` });
     }
   }
   return db;
@@ -94,9 +93,6 @@ export async function initDb() {
 
 /**
  * Execute a SELECT query and return all rows as plain objects.
- * @param {string} sql
- * @param {any[]} [args]
- * @returns {Promise<object[]>}
  */
 export async function queryAll(sql, args = []) {
   const db = getDb();
@@ -106,9 +102,6 @@ export async function queryAll(sql, args = []) {
 
 /**
  * Execute a SELECT query and return the first row as a plain object, or null.
- * @param {string} sql
- * @param {any[]} [args]
- * @returns {Promise<object|null>}
  */
 export async function queryOne(sql, args = []) {
   const db = getDb();
@@ -119,9 +112,6 @@ export async function queryOne(sql, args = []) {
 
 /**
  * Execute an INSERT/UPDATE/DELETE statement.
- * @param {string} sql
- * @param {any[]} [args]
- * @returns {Promise<{ rowsAffected: number, lastInsertRowid: number | bigint | undefined }>}
  */
 export async function execute(sql, args = []) {
   const db = getDb();

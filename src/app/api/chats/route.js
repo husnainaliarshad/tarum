@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import { queryAll, queryOne, execute, initDb } from "@/lib/db";
 import { v4 as uuidv4 } from "uuid";
 

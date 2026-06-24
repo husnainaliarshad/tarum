@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import { queryOne, queryAll, execute, initDb } from "@/lib/db";
 
 // GET /api/chats/[id] — get a single chat with its messages
