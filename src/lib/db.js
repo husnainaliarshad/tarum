@@ -12,14 +12,24 @@ let db;
  */
 export function getDb() {
   if (!db) {
-    const dir = path.dirname(dbPath);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
+    const url = process.env.TURSO_DATABASE_URL;
+    const authToken = process.env.TURSO_AUTH_TOKEN;
 
-    db = createClient({
-      url: `file:${dbPath}`,
-    });
+    if (url) {
+      db = createClient({
+        url,
+        authToken: authToken || "",
+      });
+    } else {
+      const dir = path.dirname(dbPath);
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
+
+      db = createClient({
+        url: `file:${dbPath}`,
+      });
+    }
   }
   return db;
 }
