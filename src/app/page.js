@@ -12,6 +12,8 @@ export default function Home() {
   const [error, setError] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentChat, setCurrentChat] = useState(null);
+  const [prefilledPrompt, setPrefilledPrompt] = useState("");
+  const [prefilledMode, setPrefilledMode] = useState("image");
 
   // On mount, create or load the first chat
   useEffect(() => {
@@ -137,6 +139,12 @@ export default function Home() {
     setError(null);
   }, []);
 
+  const handleSelectTemplate = useCallback((template) => {
+    setPrefilledPrompt(template.prompt || "");
+    setPrefilledMode(template.mode || "image");
+    setSidebarOpen(true); // open the panel on mobile
+  }, []);
+
   return (
     <div className="w-screen h-screen bg-[var(--bg-primary)] relative flex flex-col overflow-hidden">
       <Header onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
@@ -158,7 +166,12 @@ export default function Home() {
           {/* ===== DESKTOP SIDEBAR (lg+) ===== */}
           <div className="hidden lg:flex flex-col pl-[44px] pr-[7px] pt-[7px] pb-[20px]">
             <div className="flex-1 min-h-0">
-              <SidebarInput onGenerate={handleGenerate} />
+              <SidebarInput
+                onGenerate={handleGenerate}
+                prefilledPrompt={prefilledPrompt}
+                prefilledMode={prefilledMode}
+                onClearPrefill={() => setPrefilledPrompt("")}
+              />
             </div>
           </div>
 
@@ -188,6 +201,9 @@ export default function Home() {
                       handleGenerate(params);
                       setSidebarOpen(false);
                     }}
+                    prefilledPrompt={prefilledPrompt}
+                    prefilledMode={prefilledMode}
+                    onClearPrefill={() => setPrefilledPrompt("")}
                   />
                 </div>
               </div>
@@ -196,7 +212,12 @@ export default function Home() {
 
           {/* ===== MAIN CONTENT ===== */}
           <main className="flex-1 flex min-w-0 overflow-hidden">
-            <GeneratedContent results={results} loading={loading} error={error} />
+            <GeneratedContent
+              results={results}
+              loading={loading}
+              error={error}
+              onSelectTemplate={handleSelectTemplate}
+            />
           </main>
         </div>
       </div>

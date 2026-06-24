@@ -22,7 +22,7 @@ function SkeletonGrid() {
   );
 }
 
-function EmptyState() {
+function EmptyState({ onSelectTemplate }) {
   const [templates, setTemplates] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -58,6 +58,7 @@ function EmptyState() {
             {templates.map((temp) => (
               <div
                 key={temp.id}
+                onClick={() => onSelectTemplate && onSelectTemplate(temp)}
                 className="w-[220px] sm:w-[260px] lg:w-full shrink-0 aspect-[4/5] relative rounded-[15px] overflow-hidden border border-[#3b3633] snap-start hover:border-[#D9774B]/40 transition-all duration-300 group cursor-pointer"
               >
                 <Image
@@ -95,10 +96,10 @@ function ErrorState({ message }) {
   );
 }
 
-export default function GeneratedContent({ results, loading, error }) {
+export default function GeneratedContent({ results, loading, error, onSelectTemplate }) {
   if (loading) return <SkeletonGrid />;
   if (error) return <ErrorState message={error} />;
-  if (!results || results.length === 0) return <EmptyState />;
+  if (!results || results.length === 0) return <EmptyState onSelectTemplate={onSelectTemplate} />;
 
   return (
     <div className="flex-1 overflow-y-auto p-4 pb-36 lg:pb-4 w-full">

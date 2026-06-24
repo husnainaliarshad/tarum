@@ -138,7 +138,7 @@ function AspectRatioDropdown({ value, onChange }) {
   );
 }
 
-export default function SidebarInput({ onGenerate }) {
+export default function SidebarInput({ onGenerate, prefilledPrompt, prefilledMode, onClearPrefill }) {
   const [mode, setMode] = useState("image");
 
   // Image mode state
@@ -160,6 +160,21 @@ export default function SidebarInput({ onGenerate }) {
   const [videoAdvanceOpen, setVideoAdvanceOpen] = useState(false);
   const [videoUpload, setVideoUpload] = useState(null);
   const videoFileInputRef = useRef(null);
+
+  useEffect(() => {
+    if (prefilledPrompt) {
+      if (prefilledMode === "image") {
+        setPrompt(prefilledPrompt);
+        setMode("image");
+      } else {
+        setVideoPrompt(prefilledPrompt);
+        setMode("video");
+      }
+      if (onClearPrefill) {
+        onClearPrefill();
+      }
+    }
+  }, [prefilledPrompt, prefilledMode, onClearPrefill]);
 
   const handleGenerate = () => {
     if (!onGenerate) return;
