@@ -9,6 +9,7 @@ An AI-powered image and video generation platform built with Next.js. This proje
 - **Styling:** Tailwind CSS v4
 - **Icons:** Font Awesome 5.15.3
 - **Fonts:** Inter (body), Geist Mono (code)
+- **Database:** Turso (libsql) — local SQLite via `@libsql/client`
 
 ## Project Structure
 
