@@ -181,7 +181,7 @@ export default function Home() {
                 onClick={() => setSidebarOpen(false)}
                 aria-hidden="true"
               />
-              <div className="lg:hidden fixed inset-x-4 top-[96px] bottom-[86px] sm:w-[380px] sm:left-4 sm:right-auto bg-[var(--bg-primary)]/98 border border-[var(--border-primary)] rounded-[22px] z-50 flex flex-col shadow-2xl overflow-hidden animate-slideUp">
+              <div className="lg:hidden fixed inset-x-4 top-[80px] sm:top-[88px] bottom-[86px] sm:w-[380px] sm:left-4 sm:right-auto bg-[var(--bg-primary)]/98 border border-[var(--border-primary)] rounded-[22px] z-50 flex flex-col shadow-2xl overflow-hidden animate-slideUp">
                 <div className="flex items-center justify-between px-[18px] py-[14px] border-b border-[var(--border-primary)] shrink-0">
                   <h2 className="text-[15px] font-extrabold text-[var(--text-primary)]">Create</h2>
                   <button
