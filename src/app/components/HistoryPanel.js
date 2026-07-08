@@ -65,7 +65,7 @@ export default function HistoryPanel({ currentChatId, onSelectChat, onNewChat })
           aria-label={showAll ? "Show less history" : "View all history"}
           className="w-[95px] m-[9px] mr-0 soft rounded-[2px] flex flex-col items-center justify-center cursor-pointer hover:opacity-80 transition-opacity shrink-0"
         >
-          <i className="far fa-clock text-[#a6a39d] text-[16px]" />
+          <i className="far fa-clock text-[var(--text-muted)] text-[16px]" />
           <div className="text-[13px] font-extrabold mt-1">History</div>
           <div className="micro muted font-bold">{showAll ? "Show Less" : "View All"}</div>
         </button>
@@ -77,14 +77,14 @@ export default function HistoryPanel({ currentChatId, onSelectChat, onNewChat })
           aria-label="Start new chat"
           className="w-[100px] m-[9px] soft rounded-[2px] flex flex-col items-center justify-center cursor-pointer hover:opacity-80 transition-opacity shrink-0"
         >
-          <i className="fas fa-plus text-[#aaa7a2] text-[20px]" />
+          <i className="fas fa-plus text-[var(--text-muted)] text-[20px]" />
           <div className="micro muted font-bold mt-2">New chat</div>
         </button>
 
         {/* Chat list or empty state */}
         <div className="flex-1 flex items-center overflow-hidden min-w-0">
           {loading ? (
-            <div className="text-[#a09c97] text-[12px] font-extrabold ml-[17px]">
+            <div className="text-[var(--text-muted)] text-[12px] font-extrabold ml-[17px]">
               Loading...
             </div>
           ) : displayChats.length > 0 ? (
@@ -102,10 +102,10 @@ export default function HistoryPanel({ currentChatId, onSelectChat, onNewChat })
                     }
                   }}
                   aria-label={`Chat: ${chat.title}`}
-                  className={`group relative flex-shrink-0 w-[95px] h-[77px] rounded-[5px] overflow-hidden text-left transition-all border-2 cursor-pointer ${
+                  className={`group relative flex-shrink-0 w-[85px] sm:w-[95px] h-[72px] sm:h-[77px] rounded-[5px] overflow-hidden text-left transition-all border-2 cursor-pointer ${
                     currentChatId === chat.id
-                      ? "border-[#c9785f] shadow-[0_0_8px_rgba(201,120,95,0.4)]"
-                      : "border-stone-800 hover:border-stone-700"
+                      ? "border-[var(--brand-accent)] shadow-[0_0_8px_rgba(201,120,95,0.4)]"
+                      : "border-[var(--border-primary)] hover:border-[var(--border-secondary)]"
                   }`}
                 >
                   {chat.thumbnail ? (
@@ -115,9 +115,9 @@ export default function HistoryPanel({ currentChatId, onSelectChat, onNewChat })
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-[#2c2b2a] to-[#1a1918] flex flex-col items-center justify-center p-2 text-center">
-                      <i className="far fa-image text-[14px] text-stone-500 mb-1" />
-                      <div className="text-[7px] font-extrabold text-stone-400 truncate w-full">
+                    <div className="w-full h-full bg-gradient-to-br from-[var(--chat-gradient-from)] to-[var(--chat-gradient-to)] flex flex-col items-center justify-center p-2 text-center">
+                      <i className="far fa-image text-[14px] text-[var(--text-muted)] mb-1" />
+                      <div className="text-[7px] font-extrabold text-[var(--text-muted)] truncate w-full">
                         {chat.title}
                       </div>
                     </div>
@@ -140,7 +140,7 @@ export default function HistoryPanel({ currentChatId, onSelectChat, onNewChat })
                       }
                     }}
                     aria-label={`Delete ${chat.title}`}
-                    className="absolute top-[3px] right-[3px] w-[15px] h-[15px] rounded-full bg-black/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-900/90 text-white cursor-pointer"
+                    className="absolute top-[4px] right-[4px] w-[20px] h-[20px] rounded-full bg-black/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-900/90 text-white cursor-pointer touch-manipulation"
                   >
                     <i className="fas fa-times text-[6px]" />
                   </div>
@@ -148,7 +148,7 @@ export default function HistoryPanel({ currentChatId, onSelectChat, onNewChat })
               ))}
             </div>
           ) : (
-            <div className="text-[#a09c97] text-[12px] font-extrabold ml-[17px]">
+            <div className="text-[var(--text-muted)] text-[12px] font-extrabold ml-[17px]">
               No history yet
             </div>
           )}

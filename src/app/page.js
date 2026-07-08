@@ -64,9 +64,6 @@ export default function Home() {
           throw new Error("Failed to create a new chat session");
         }
 
-        // Set the active chat state to the new session
-        setCurrentChat(chat);
-
         // Save user message in the new session
         await fetch(`/api/chats/${chat.id}/messages`, {
           method: "POST",
@@ -98,6 +95,7 @@ export default function Home() {
             metadata: { results: data.results },
           }),
         });
+        setCurrentChat(chat);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -179,20 +177,20 @@ export default function Home() {
           {sidebarOpen && (
             <>
               <div
-                className="lg:hidden fixed inset-0 bg-black/60 z-30 backdrop-blur-xs transition-opacity"
+                className="lg:hidden fixed inset-0 bg-black/60 z-30 backdrop-blur-sm transition-opacity"
                 onClick={() => setSidebarOpen(false)}
                 aria-hidden="true"
               />
-              <div className="lg:hidden fixed left-[16px] top-[96px] bottom-[86px] w-[calc(100%-32px)] sm:w-[380px] bg-[#181816]/98 border border-[#3b3633] rounded-[22px] z-40 flex flex-col shadow-2xl overflow-hidden animate-slideUp">
-                <div className="flex items-center justify-between px-[18px] py-[14px] border-b border-[#3b3633] shrink-0">
-                  <h2 className="text-[15px] font-extrabold text-white">Create Image</h2>
+              <div className="lg:hidden fixed inset-x-4 top-[96px] bottom-[86px] sm:w-[380px] sm:left-4 sm:right-auto bg-[var(--bg-primary)]/98 border border-[var(--border-primary)] rounded-[22px] z-50 flex flex-col shadow-2xl overflow-hidden animate-slideUp">
+                <div className="flex items-center justify-between px-[18px] py-[14px] border-b border-[var(--border-primary)] shrink-0">
+                  <h2 className="text-[15px] font-extrabold text-[var(--text-primary)]">Create</h2>
                   <button
                     type="button"
                     onClick={() => setSidebarOpen(false)}
-                    className="w-[28px] h-[28px] rounded-full bg-[#272421] border border-[#3b3633] flex items-center justify-center text-white cursor-pointer hover:bg-[#34302c] transition-colors"
+                    className="w-[36px] h-[36px] rounded-full panel flex items-center justify-center text-[var(--text-primary)] cursor-pointer hover:bg-[var(--bg-tertiary)] transition-colors"
                     aria-label="Close panel"
                   >
-                    <i className="fas fa-times text-[10px]" />
+                    <i className="fas fa-times text-[12px]" />
                   </button>
                 </div>
                 <div className="flex-1 overflow-y-auto scrollbar-none p-1 pb-4">
@@ -226,61 +224,61 @@ export default function Home() {
       <div className="lg:hidden fixed bottom-[84px] left-0 right-0 px-4 z-20 flex justify-center pointer-events-none">
         <div
           onClick={() => setSidebarOpen(true)}
-          className="w-full max-w-[500px] h-[50px] rounded-full bg-[#272421]/95 border border-[#3b3633] px-[20px] flex items-center justify-between shadow-lg backdrop-blur-md cursor-pointer hover:border-[#4a433f] transition-all pointer-events-auto"
+          className="w-full max-w-[500px] h-[52px] rounded-full bg-[var(--bg-secondary)]/95 border border-[var(--border-primary)] px-[20px] flex items-center justify-between shadow-lg backdrop-blur-md cursor-pointer active:scale-[0.98] hover:border-[var(--border-secondary)] transition-all pointer-events-auto"
         >
-          <span className="text-[#898681] text-[12px] font-bold">
+          <span className="text-[var(--text-muted)] text-[13px] font-bold">
             Tap to create your image...
           </span>
           <button
             type="button"
-            className="w-[32px] h-[32px] rounded-full bg-[#3b3937] hover:bg-[#4a4846] flex items-center justify-center text-white cursor-pointer transition-colors"
+            className="w-[38px] h-[38px] rounded-full bg-[var(--bg-tertiary)] hover:bg-[var(--border-primary)] active:bg-[var(--brand-accent)] flex items-center justify-center text-[var(--text-primary)] cursor-pointer transition-colors shrink-0"
             aria-label="Quick create"
           >
-            <i className="fas fa-bolt text-[11px] text-[#aaa6a0]" />
+            <i className="fas fa-bolt text-[13px] text-[var(--nav-icon)]" />
           </button>
         </div>
       </div>
 
       {/* ===== BOTTOM NAVIGATION BAR (lg:hidden) ===== */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 h-[70px] bg-[#1e1c1a]/95 border-t border-[#343330] flex items-center justify-around px-4 z-30 pb-safe shadow-xl shrink-0">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 h-[72px] bg-[var(--nav-bg)]/95 border-t border-[var(--header-border)] flex items-center justify-around px-4 z-40 pb-safe shadow-lg shrink-0">
         <button
           type="button"
-          className="flex flex-col items-center gap-1 text-[#aaa6a0] hover:text-white transition-colors cursor-pointer"
+          className="flex flex-col items-center gap-[3px] text-[var(--nav-icon)] hover:text-[var(--text-primary)] transition-colors cursor-pointer touch-manipulation"
           aria-label="Home"
         >
-          <i className="fas fa-home text-[16px]" />
+          <i className="fas fa-home text-[18px]" />
           <span className="text-[9px] font-bold">Home</span>
         </button>
         <button
           type="button"
-          className="flex flex-col items-center gap-1 text-[#aaa6a0] hover:text-white transition-colors cursor-pointer"
+          className="flex flex-col items-center gap-[3px] text-[var(--nav-icon)] hover:text-[var(--text-primary)] transition-colors cursor-pointer touch-manipulation"
           aria-label="Community"
         >
-          <i className="fas fa-users text-[16px]" />
+          <i className="fas fa-users text-[18px]" />
           <span className="text-[9px] font-bold">Community</span>
         </button>
         <button
           type="button"
           onClick={() => setSidebarOpen(true)}
-          className="w-[50px] h-[34px] rounded-[10px] bg-[#c9785f] hover:bg-[#d9886f] flex items-center justify-center text-white text-[14px] cursor-pointer shadow-md transition-colors"
+          className="w-[54px] h-[36px] rounded-[10px] bg-[var(--brand-accent)] hover:opacity-80 active:scale-95 flex items-center justify-center text-white text-[18px] cursor-pointer shadow-md transition-all touch-manipulation"
           aria-label="Create new"
         >
           <i className="fas fa-magic" />
         </button>
         <button
           type="button"
-          className="flex flex-col items-center gap-1 text-[#aaa6a0] hover:text-white transition-colors cursor-pointer"
+          className="flex flex-col items-center gap-[3px] text-[var(--nav-icon)] hover:text-[var(--text-primary)] transition-colors cursor-pointer touch-manipulation"
           aria-label="Assets"
         >
-          <i className="fas fa-folder text-[16px]" />
+          <i className="fas fa-folder text-[18px]" />
           <span className="text-[9px] font-bold">Assets</span>
         </button>
         <button
           type="button"
-          className="flex flex-col items-center gap-1 text-[#aaa6a0] hover:text-white transition-colors cursor-pointer"
+          className="flex flex-col items-center gap-[3px] text-[var(--nav-icon)] hover:text-[var(--text-primary)] transition-colors cursor-pointer touch-manipulation"
           aria-label="Profile"
         >
-          <i className="fas fa-user text-[16px]" />
+          <i className="fas fa-user text-[18px]" />
           <span className="text-[9px] font-bold">Profile</span>
         </button>
       </nav>

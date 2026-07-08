@@ -67,24 +67,24 @@ function AspectRatioDropdown({ value, onChange }) {
         onClick={() => setIsOpen(!isOpen)}
         aria-label={`Aspect ratio: ${selected.label}`}
         aria-expanded={isOpen}
-        className={`flex items-center gap-[6px] px-[10px] h-[25px] rounded-[7px] bg-[#262220] border transition-colors duration-200 ${
-          isOpen ? "border-[#D9774B]" : "border-stone-700 hover:border-stone-600"
+        className={`flex items-center gap-[6px] px-[10px] h-[25px] rounded-[7px] bg-[var(--aspect-btn-bg)] border transition-colors duration-200 ${
+          isOpen ? "border-[var(--brand-accent)]" : "border-[var(--border-primary)] hover:border-[var(--border-secondary)]"
         }`}
       >
         {selected.id === "auto" ? (
-          <div className="w-5 h-5 border-2 border-dashed border-stone-400 rounded-sm flex items-center justify-center text-[8px] font-bold text-stone-400">
+          <div className="w-5 h-5 border-2 border-dashed border-[var(--text-muted)] rounded-sm flex items-center justify-center text-[8px] font-bold text-[var(--text-muted)]">
             A
           </div>
         ) : (
-          <div className={`border border-stone-400 rounded-sm ${selected.boxClass}`} />
+          <div className={`border border-[var(--text-muted)] rounded-sm ${selected.boxClass}`} />
         )}
-        <span className="font-bold text-[11px] text-stone-200">{selected.label}</span>
-        <i className={`fas fa-chevron-down text-[7px] text-stone-400 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+        <span className="font-bold text-[11px] text-[var(--text-primary)]">{selected.label}</span>
+        <i className={`fas fa-chevron-down text-[7px] text-[var(--text-muted)] transition-transform ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
       {/* Popover Menu */}
       {isOpen && (
-        <div className="absolute bottom-full left-0 mb-2 w-56 bg-[#262220] border border-stone-800 rounded-xl p-3 shadow-2xl z-50">
+        <div className="absolute bottom-full left-0 mb-2 w-56 bg-[var(--aspect-btn-bg)] border border-[var(--border-primary)] rounded-xl p-3 shadow-2xl z-50">
           <div className="grid grid-cols-4 gap-y-3 gap-x-1 justify-items-center items-center">
             {aspectRatios.map((ratio) => {
               const isSelected = selected.id === ratio.id;
@@ -98,15 +98,15 @@ function AspectRatioDropdown({ value, onChange }) {
                   }}
                   aria-label={`${ratio.label} aspect ratio`}
                   aria-pressed={isSelected}
-                  className="flex flex-col items-center gap-1 group w-full py-1 rounded-lg hover:bg-stone-800/30 transition-all"
+                  className="flex flex-col items-center gap-1 group w-full py-1 rounded-lg hover:bg-[var(--bg-tertiary)]/30 transition-all"
                 >
                   <div className="h-8 flex items-center justify-center w-full">
                     {ratio.id === "auto" ? (
                       <div
                         className={`w-5 h-5 border-2 border-dashed rounded flex items-center justify-center text-[9px] font-bold transition-all ${
                           isSelected
-                            ? "border-[#D9774B] text-[#D9774B] bg-[#D9774B]/10 shadow-[0_0_6px_rgba(217,119,75,0.2)]"
-                            : "border-stone-600 text-stone-400 group-hover:border-stone-400"
+                            ? "border-[var(--accent-border)] text-[var(--accent-border)] bg-[var(--accent-border)]/10 shadow-[0_0_6px_rgba(217,119,75,0.2)]"
+                            : "border-[var(--text-muted)] text-[var(--text-muted)] group-hover:border-[var(--text-primary)]"
                         }`}
                       >
                         A
@@ -115,15 +115,15 @@ function AspectRatioDropdown({ value, onChange }) {
                       <div
                         className={`border rounded transition-all ${
                           isSelected
-                            ? "border-[#D9774B] bg-[#D9774B]/10 shadow-[0_0_6px_rgba(217,119,75,0.2)]"
-                            : "border-stone-600 group-hover:border-stone-400"
+                            ? "border-[var(--accent-border)] bg-[var(--accent-border)]/10 shadow-[0_0_6px_rgba(217,119,75,0.2)]"
+                            : "border-[var(--text-muted)] group-hover:border-[var(--text-primary)]"
                         } ${ratio.boxClass}`}
                       />
                     )}
                   </div>
                   <span
                     className={`text-[9px] font-semibold ${
-                      isSelected ? "text-[#D9774B]" : "text-stone-400 group-hover:text-stone-200"
+                      isSelected ? "text-[var(--accent-border)]" : "text-[var(--text-muted)] group-hover:text-[var(--text-primary)]"
                     }`}
                   >
                     {ratio.label}
@@ -215,9 +215,9 @@ export default function SidebarInput({ onGenerate, prefilledPrompt, prefilledMod
   const videoModels = ["Kling v3", "Kling v2", "Pika"];
 
   return (
-    <aside className="w-full lg:w-[305px] lg:panel lg:rounded-[22px] px-3 lg:px-[18px] pt-3 lg:pt-[17px] lg:bg-[var(--bg-secondary)] lg:border lg:border-[var(--border-primary)] shrink-0 flex flex-col h-full" aria-label="Generation controls">
+    <aside className="w-full lg:w-[305px] lg:panel lg:rounded-[22px] px-3 sm:px-4 lg:px-[18px] pt-3 lg:pt-[17px] shrink-0 flex flex-col h-full" aria-label="Generation controls">
       {/* Mode toggle: Image / Video */}
-      <div className="h-[31px] bg-[#282522] rounded-full p-[3px] flex text-[10px] font-bold shrink-0" role="tablist" aria-label="Generation mode">
+      <div className="h-[35px] sm:h-[31px] bg-[var(--mode-toggle-bg)] rounded-full p-[3px] flex text-[12px] sm:text-[11px] font-bold shrink-0" role="tablist" aria-label="Generation mode">
         <button
           type="button"
           role="tab"
@@ -250,19 +250,19 @@ export default function SidebarInput({ onGenerate, prefilledPrompt, prefilledMod
         {mode === "image" && (
           <>
             {/* Prompt textarea */}
-            <div className="panel2 rounded-[18px] h-[178px] p-[16px] relative">
+            <div className="panel2 rounded-[18px] h-[180px] sm:h-[178px] p-[16px] relative">
               <textarea
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
-                placeholder="Describe you imaginations to be converted to piece of art ...."
+                placeholder="Describe what you want to create..."
                 aria-label="Image prompt"
-                className="w-full h-full bg-transparent text-[#898681] text-[12px] font-bold leading-[15px] resize-none outline-none placeholder:text-[#898681]"
+                className="w-full h-full bg-transparent text-[var(--text-primary)] text-[13px] sm:text-[12px] font-bold leading-[16px] sm:leading-[15px] resize-none outline-none placeholder:text-[var(--text-muted)]"
               />
               <button
                 type="button"
                 onClick={handleGenerate}
                 aria-label="Generate image"
-                className="absolute right-[12px] bottom-[12px] bg-[#8b9094] text-[#474747] rounded-full h-[38px] px-[18px] text-[12px] font-extrabold cursor-pointer hover:bg-[#9ba0a4] transition-colors"
+                className="absolute right-[12px] bottom-[12px] bg-[var(--generate-btn-bg)] text-[var(--generate-btn-text)] rounded-full h-[40px] sm:h-[38px] px-[20px] sm:px-[18px] text-[13px] sm:text-[12px] font-extrabold cursor-pointer hover:opacity-80 active:scale-95 transition-all"
               >
                 <i className="fas fa-magic mr-1" /> Generate
               </button>
@@ -281,10 +281,10 @@ export default function SidebarInput({ onGenerate, prefilledPrompt, prefilledMod
               type="button"
               onClick={() => imageFileInputRef.current?.click()}
               aria-label={uploadedFile ? `Uploaded: ${uploadedFile.name}` : "Upload image"}
-              className="panel2 rounded-[16px] mt-[17px] h-[118px] flex flex-col items-center justify-center w-full cursor-pointer hover:opacity-80 transition-opacity"
+              className="panel2 rounded-[16px] mt-[17px] h-[120px] sm:h-[118px] flex flex-col items-center justify-center w-full cursor-pointer hover:opacity-80 transition-opacity"
             >
-              <i className="fas fa-upload text-[#9d9993] text-[22px]" />
-              <div className="text-[10px] font-extrabold mt-[12px] text-[#c0d8d1]">
+              <i className="fas fa-upload text-[var(--text-muted)] text-[24px] sm:text-[22px]" />
+              <div className="text-[11px] sm:text-[10px] font-extrabold mt-[12px] text-[var(--text-accent)]">
                 {uploadedFile ? uploadedFile.name : "Upload image"}
               </div>
             </button>
@@ -300,7 +300,7 @@ export default function SidebarInput({ onGenerate, prefilledPrompt, prefilledMod
                     aria-label={`${num} image${num > 1 ? "s" : ""}`}
                     aria-pressed={imageCount === num}
                     className={`h-full px-[12px] flex items-center cursor-pointer transition-colors ${
-                      imageCount === num ? "accent" : "hover:bg-[#3a3735]"
+                      imageCount === num ? "accent" : "hover:bg-[var(--bg-tertiary)]"
                     }`}
                   >
                     {num}
@@ -353,14 +353,14 @@ export default function SidebarInput({ onGenerate, prefilledPrompt, prefilledMod
               <i className={`fas fa-chevron-down text-[8px] muted transition-transform ${advanceOpen ? "rotate-180" : ""}`} />
             </button>
             {advanceOpen && (
-              <div className="panel2 rounded-[7px] rounded-t-none px-[12px] py-[10px] text-[10px] text-[#8f8d88] space-y-2 border-t-0">
+              <div className="panel2 rounded-[7px] rounded-t-none px-[12px] py-[10px] text-[10px] text-[var(--text-muted)] space-y-2 border-t-0">
                 <label className="flex items-center justify-between">
                   <span>Negative prompt</span>
                   <input
                     type="text"
                     placeholder="..."
                     aria-label="Negative prompt"
-                    className="bg-[#242321] rounded px-2 py-1 text-white text-[10px] w-[160px] outline-none"
+                    className="bg-[var(--bg-soft)] rounded px-2 py-1 text-[var(--text-primary)] text-[10px] w-[160px] outline-none"
                   />
                 </label>
                 <label className="flex items-center justify-between">
@@ -369,7 +369,7 @@ export default function SidebarInput({ onGenerate, prefilledPrompt, prefilledMod
                     type="text"
                     placeholder="random"
                     aria-label="Seed"
-                    className="bg-[#242321] rounded px-2 py-1 text-white text-[10px] w-[160px] outline-none"
+                    className="bg-[var(--bg-soft)] rounded px-2 py-1 text-[var(--text-primary)] text-[10px] w-[160px] outline-none"
                   />
                 </label>
               </div>
@@ -385,33 +385,33 @@ export default function SidebarInput({ onGenerate, prefilledPrompt, prefilledMod
               <button
                 type="button"
                 aria-label="Change effect"
-                className="absolute right-[7px] top-[8px] bg-[#31302e] rounded-full px-2 py-1 micro font-bold cursor-pointer hover:bg-[#3d3b39] transition-colors"
+                className="absolute right-[7px] top-[8px] bg-[var(--change-btn-bg)] rounded-full px-2 py-1 micro font-bold cursor-pointer hover:bg-[var(--bg-tertiary)] transition-colors"
               >
                 <i className="fas fa-pen mr-1" />
                 Change
               </button>
-              <div className="absolute left-[9px] bottom-[17px] text-[#c87759] micro font-extrabold">
+              <div className="absolute left-[9px] bottom-[17px] text-[var(--brand-accent)] micro font-extrabold">
                 EFFECTS
               </div>
-              <div className="absolute left-[9px] bottom-[7px] text-white micro font-extrabold">
+              <div className="absolute left-[9px] bottom-[7px] text-[var(--text-primary)] micro font-extrabold">
                 No effect selected.
               </div>
             </div>
 
             {/* Prompt textarea */}
-            <div className="panel2 rounded-[12px] mt-[11px] h-[172px] p-[14px] relative">
+            <div className="panel2 rounded-[12px] mt-[11px] h-[180px] sm:h-[172px] p-[14px] relative">
               <textarea
                 value={videoPrompt}
                 onChange={(e) => setVideoPrompt(e.target.value)}
-                placeholder="Describe you imaginations to be converted to piece of art ...."
+                placeholder="Describe what you want to create..."
                 aria-label="Video prompt"
-                className="w-full h-full bg-transparent text-[#898681] text-[11px] font-bold leading-[14px] resize-none outline-none placeholder:text-[#898681]"
+                className="w-full h-full bg-transparent text-[var(--text-primary)] text-[12px] sm:text-[11px] font-bold leading-[15px] sm:leading-[14px] resize-none outline-none placeholder:text-[var(--text-muted)]"
               />
               <button
                 type="button"
                 onClick={handleGenerate}
                 aria-label="Generate video"
-                className="absolute right-[11px] bottom-[12px] bg-[#c67458] text-[#442820] rounded-full h-[27px] px-[13px] text-[10px] font-extrabold cursor-pointer hover:bg-[#d47f63] transition-colors"
+                className="absolute right-[11px] bottom-[12px] bg-[var(--brand-accent)] text-[var(--brand-accent-text)] rounded-full h-[32px] sm:h-[27px] px-[16px] sm:px-[13px] text-[11px] sm:text-[10px] font-extrabold cursor-pointer hover:opacity-80 active:scale-95 transition-all"
               >
                 <i className="fas fa-magic mr-1" />
                 Generate
@@ -420,10 +420,10 @@ export default function SidebarInput({ onGenerate, prefilledPrompt, prefilledMod
 
             {/* Multi-shot toggle */}
             <div className="panel2 rounded-[9px] mt-[10px] h-[57px] p-[10px] relative">
-              <div className="text-[10px] font-extrabold text-[#c0d8d1]">
+              <div className="text-[10px] font-extrabold text-[var(--text-accent)]">
                 Multi-shot
               </div>
-              <div className="micro font-bold text-[#aaa6a0]">
+              <div className="micro font-bold text-[var(--text-muted)]">
                 Up to 6 shots, max 16s total
               </div>
               <button
@@ -432,11 +432,11 @@ export default function SidebarInput({ onGenerate, prefilledPrompt, prefilledMod
                 aria-label={`Multi-shot: ${multiShot ? "on" : "off"}`}
                 aria-pressed={multiShot}
                 className={`absolute right-[12px] top-[18px] w-[36px] h-[21px] rounded-full cursor-pointer transition-colors ${
-                  multiShot ? "bg-[#7b4a38]" : "bg-[#3b3937]"
+                  multiShot ? "bg-[var(--accent-bg)]" : "bg-[var(--multi-shot-off)]"
                 }`}
               >
                 <div
-                  className={`w-[17px] h-[17px] bg-[#302e2c] rounded-full mt-[2px] transition-transform ${
+                  className={`w-[17px] h-[17px] bg-[var(--multi-shot-knob)] rounded-full mt-[2px] transition-transform ${
                     multiShot ? "translate-x-[17px]" : "translate-x-[2px]"
                   }`}
                 />
@@ -458,7 +458,7 @@ export default function SidebarInput({ onGenerate, prefilledPrompt, prefilledMod
               aria-label={videoUpload ? `Uploaded: ${videoUpload.name}` : "Upload image or video"}
               className="panel2 border-dashed rounded-[8px] mt-[10px] h-[73px] flex flex-col items-center justify-center w-full cursor-pointer hover:opacity-80 transition-opacity"
             >
-              <i className="fas fa-upload text-[#9d9993]" />
+              <i className="fas fa-upload text-[var(--text-muted)]" />
               <div className="micro font-extrabold mt-2">
                 {videoUpload ? videoUpload.name : "Upload image"}
               </div>
@@ -476,7 +476,7 @@ export default function SidebarInput({ onGenerate, prefilledPrompt, prefilledMod
                   className={`micro px-3 py-1 rounded cursor-pointer transition-colors ${
                     videoResolution === res
                       ? "accent"
-                      : "panel2 hover:bg-[#3a3735]"
+                      : "panel2 hover:bg-[var(--bg-tertiary)]"
                   }`}
                 >
                   {res}
@@ -509,14 +509,14 @@ export default function SidebarInput({ onGenerate, prefilledPrompt, prefilledMod
               <i className={`fas fa-chevron-down text-[8px] muted transition-transform ${videoAdvanceOpen ? "rotate-180" : ""}`} />
             </button>
             {videoAdvanceOpen && (
-              <div className="panel2 rounded-[7px] rounded-t-none px-[12px] py-[10px] text-[10px] text-[#8f8d88] space-y-2 border-t-0">
+              <div className="panel2 rounded-[7px] rounded-t-none px-[12px] py-[10px] text-[10px] text-[var(--text-muted)] space-y-2 border-t-0">
                 <label className="flex items-center justify-between">
                   <span>Duration</span>
                   <input
                     type="text"
                     placeholder="5s"
                     aria-label="Duration in seconds"
-                    className="bg-[#242321] rounded px-2 py-1 text-white text-[10px] w-[160px] outline-none"
+                    className="bg-[var(--bg-soft)] rounded px-2 py-1 text-[var(--text-primary)] text-[10px] w-[160px] outline-none"
                   />
                 </label>
                 <label className="flex items-center justify-between">
@@ -525,7 +525,7 @@ export default function SidebarInput({ onGenerate, prefilledPrompt, prefilledMod
                     type="text"
                     placeholder="24"
                     aria-label="Frames per second"
-                    className="bg-[#242321] rounded px-2 py-1 text-white text-[10px] w-[160px] outline-none"
+                    className="bg-[var(--bg-soft)] rounded px-2 py-1 text-[var(--text-primary)] text-[10px] w-[160px] outline-none"
                   />
                 </label>
               </div>

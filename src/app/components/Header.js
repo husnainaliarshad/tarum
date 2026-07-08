@@ -10,26 +10,26 @@ export default function Header({ onToggleSidebar }) {
   };
 
   return (
-    <header className="h-[82px] relative border-b border-[#343330] shrink-0">
+    <header className="h-[82px] relative border-b border-[var(--header-border)] shrink-0">
       {/* Logo & Mobile Menu Toggle */}
-      <div className="absolute left-[15px] top-[19px] flex items-center gap-[10px] text-[#c9785f] text-[28px] font-extrabold leading-none">
+      <div className="absolute left-[15px] top-[19px] flex items-center gap-[10px] text-[var(--brand-accent)] text-[28px] font-extrabold leading-none">
         <span>F</span>
         {/* Mobile sidebar toggle */}
         <button
           type="button"
           onClick={onToggleSidebar}
           aria-label="Toggle sidebar"
-          className="lg:hidden w-[36px] h-[36px] rounded-[8px] border border-[#343330] bg-[#272421] flex items-center justify-center text-white text-[14px] cursor-pointer hover:bg-[#34302c] transition-colors"
+          className="lg:hidden w-[40px] h-[40px] rounded-[8px] border panel flex items-center justify-center text-[var(--text-primary)] text-[16px] cursor-pointer touch-manipulation active:bg-[var(--bg-tertiary)] transition-colors"
         >
           <i className="fas fa-bars" />
         </button>
       </div>
 
       {/* Topline decorative bar */}
-      <div className="absolute left-1/2 -translate-x-1/2 top-[10px] w-[374px] h-[13px] rounded-full topline" />
+      <div className="absolute left-1/2 -translate-x-1/2 top-[10px] w-[80%] max-w-[374px] h-[13px] rounded-full topline" />
 
       {/* Navigation */}
-      <nav className="hidden lg:flex absolute left-1/2 -translate-x-1/2 top-[31px] items-center gap-[34px] text-white text-[15px]">
+      <nav className="hidden lg:flex absolute left-1/2 -translate-x-1/2 top-[31px] items-center gap-[34px] text-[var(--nav-icon)] text-[15px]">
         <button type="button" onClick={() => handleNavClick("home")} aria-label="Home" className="cursor-pointer">
           <i className="fas fa-home" />
         </button>
@@ -78,7 +78,7 @@ export default function Header({ onToggleSidebar }) {
           type="button"
           onClick={() => console.log("Try Now")}
           aria-label="Try now"
-          className="bg-[#2b2928] h-[25px] px-[16px] rounded-[7px] text-[11px] font-extrabold cursor-pointer hover:opacity-80 transition-opacity"
+          className="btn h-[25px] px-[16px] rounded-[7px] text-[11px] font-extrabold cursor-pointer hover:opacity-80 transition-opacity"
         >
           Try Now
         </button>

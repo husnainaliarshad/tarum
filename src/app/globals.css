@@ -1,8 +1,6 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #181816;
-  --color-foreground: #eee;
   --font-sans: "Inter", Arial, sans-serif;
   --font-mono: var(--font-geist-mono);
 }
@@ -27,6 +25,21 @@
   --thumb-gradient: linear-gradient(160deg, #56645e, #9b865e 45%, #25231f 46%, #403125);
   --select-option-bg: #302d2b;
   --select-option-text: #fff;
+  --header-border: #343330;
+  --nav-bg: #1e1c1a;
+  --nav-icon: #aaa6a0;
+  --brand-accent: #c9785f;
+  --brand-accent-text: #442820;
+  --skeleton-shimmer: #3a3735;
+  --mode-toggle-bg: #282522;
+  --aspect-btn-bg: #262220;
+  --change-btn-bg: #31302e;
+  --multi-shot-off: #3b3937;
+  --multi-shot-knob: #302e2c;
+  --chat-gradient-from: #2c2b2a;
+  --chat-gradient-to: #1a1918;
+  --generate-btn-bg: #8b9094;
+  --generate-btn-text: #474747;
 }
 
 html.light {
@@ -45,9 +58,24 @@ html.light {
   --btn-border: #d4d0cc;
   --topline-bg: #e0deda;
   --topline-border: #d0ccc8;
-  --thumb-gradient: linear-gradient(160deg, #a8c0b8, #d4c4a0 45%, #e8e6e2 46%, #d8c8b8);
+  --thumb-gradient: linear-gradient(160deg, #a8c0b8, #d4c4a0 45%, #d0ccc8 46%, #d8c8b8);
   --select-option-bg: #ffffff;
   --select-option-text: #1a1a18;
+  --header-border: #d4d0cc;
+  --nav-bg: #ffffff;
+  --nav-icon: #6b6760;
+  --brand-accent: #d9774b;
+  --brand-accent-text: #442820;
+  --skeleton-shimmer: #e0deda;
+  --mode-toggle-bg: #e8e6e2;
+  --aspect-btn-bg: #f0eeeb;
+  --change-btn-bg: #e0deda;
+  --multi-shot-off: #d4d0cc;
+  --multi-shot-knob: #f5f3f0;
+  --chat-gradient-from: #e8e6e2;
+  --chat-gradient-to: #f5f3f0;
+  --generate-btn-bg: #6b6760;
+  --generate-btn-text: #ffffff;
 }
 
 body {
@@ -92,7 +120,6 @@ body {
 .topline {
   background: var(--topline-bg);
   border: 1px solid var(--topline-border);
-  box-shadow: inset 0 1px rgba(255, 255, 255, 0.04);
 }
 
 .btn {
