@@ -47,24 +47,40 @@ export default function Home() {
       setLoading(true);
       setError(null);
       try {
-        // Create a new chat session specifically for this generation
         const title = params.prompt
           ? (params.prompt.length > 25 ? params.prompt.substring(0, 25) + "..." : params.prompt)
           : `New ${params.mode} generation`;
 
-        const createRes = await fetch("/api/chats", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ title, mode: params.mode }),
-        });
-        const createData = await createRes.json();
-        const chat = createData.chat;
+        let chat = currentChat;
+
+        // If current chat is a draft, persist it first
+        if (chat?.isDraft) {
+          const createRes = await fetch("/api/chats", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ title, mode: params.mode }),
+          });
+          const createData = await createRes.json();
+          if (!createData.chat) {
+            throw new Error("Failed to create chat session");
+          }
+          chat = createData.chat;
+        } else if (!chat) {
+          // No chat at all - create new
+          const createRes = await fetch("/api/chats", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ title, mode: params.mode }),
+          });
+          const createData = await createRes.json();
+          chat = createData.chat;
+        }
 
         if (!chat) {
           throw new Error("Failed to create a new chat session");
         }
 
-        // Save user message in the new session
+        // Save user message
         await fetch(`/api/chats/${chat.id}/messages`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -85,7 +101,7 @@ export default function Home() {
         const data = await res.json();
         setResults(data.results);
 
-        // Save assistant message with results in the new session
+        // Save assistant message with results
         await fetch(`/api/chats/${chat.id}/messages`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -102,7 +118,7 @@ export default function Home() {
         setLoading(false);
       }
     },
-    []
+    [currentChat]
   );
 
   const handleSelectChat = useCallback(async (chat) => {
@@ -153,6 +169,7 @@ export default function Home() {
           <div className="h-[95px]">
             <HistoryPanel
               currentChatId={currentChat?.id}
+              currentChat={currentChat}
               onSelectChat={handleSelectChat}
               onNewChat={handleNewChat}
             />

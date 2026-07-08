@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 
-export default function HistoryPanel({ currentChatId, onSelectChat, onNewChat }) {
+export default function HistoryPanel({ currentChatId, currentChat, onSelectChat, onNewChat }) {
   const [chats, setChats] = useState([]);
   const [showAll, setShowAll] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -23,21 +23,15 @@ export default function HistoryPanel({ currentChatId, onSelectChat, onNewChat })
     fetchChats();
   }, [fetchChats, currentChatId]);
 
-  const handleNewChat = async () => {
-    try {
-      const res = await fetch("/api/chats", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title: "New Chat" }),
-      });
-      const data = await res.json();
-      if (data.chat) {
-        onNewChat(data.chat);
-        fetchChats();
-      }
-    } catch (err) {
-      console.error("Failed to create chat:", err);
-    }
+  const handleNewChat = () => {
+    // Create a local draft chat - not persisted to DB until generation
+    const draftChat = {
+      id: `draft-${Date.now()}`,
+      title: "New Chat",
+      isDraft: true,
+      created_at: new Date().toISOString(),
+    };
+    onNewChat(draftChat);
   };
 
   const handleDeleteChat = async (e, chatId) => {
@@ -53,7 +47,11 @@ export default function HistoryPanel({ currentChatId, onSelectChat, onNewChat })
     }
   };
 
-  const displayChats = showAll ? chats : chats.slice(0, 5);
+  // Include draft chat in display if it exists and isn't already in the list
+  const allChats = currentChat?.isDraft && !chats.find(c => c.id === currentChat.id)
+    ? [currentChat, ...chats]
+    : chats;
+  const displayChats = showAll ? allChats : allChats.slice(0, 5);
 
   return (
     <section className="panel rounded-[5px] shrink-0 h-full" aria-label="History panel">
